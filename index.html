@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="http://hongru.github.io/proj/canvas2image/canvas2image.js"></script>
+	<title>Hindi-modifiers</title>
+</head>
+<body>
+	<h1 align = center>हस्तलिखित हिंदी भाषा के संशोधक (मात्राएँ) और वर्ण</h1>
+	<hr>
+	<div class = "images">
+		<p class = head>वर्ण</p>
+		<p class = head>मात्राएँ</p>
+		<p class = head>पृथक्करण</p>
+		<img src="img4.jpg" width = 300px hegith = 100px>
+		<img src="img2.jpg" width = 300px hegith = 200px>
+		<img src="img5.jpg" width = 300px height = 100px>
+	</div>
+	<hr>
+	<h2 class = "heading">
+		नीचे दिए गए बॉक्स में हिंदी भाषा में एक शब्द या शब्दों की एक पंक्ति बनाएं
+	</h2>
+	<div class = "contanier">
+        <!-- <div class = "canvas" id = "canvas-box"></div> -->
+        <canvas class = "canvas" id="cv"></canvas>  
+    </div>
+
+    <div class = "btn-container">
+        <button class = "btn clear-btn" id = "clear-btn">बॉक्स को साफ करें</button>
+        <button class = "btn pred-btn" id = "pred-btn">अलगाव करो</button>
+    </div>
+    <div class = output-container id = out-c>
+    	
+    </div>
+    <script type="text/javascript" src="script.js"></script>
+</body>
+</html>

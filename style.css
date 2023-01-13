@@ -1,0 +1,70 @@
+body{
+	background-color: hsl(0, 0%, 92%);
+	height: auto;
+	display: block;
+	justify-content: center;
+	align-items: center;
+}
+.images{
+	display: grid;
+	justify-content: center;
+	align-items: center;
+	grid-template-columns: 300px 300px 300px;
+	background-color: floralwhite;
+	box-shadow: 10;
+	grid-column-gap: 50px;
+}
+.head{
+	font-size: 20px;
+	align-items: center;
+}
+.contanier{
+  display:flex;
+  justify-content: left;
+  margin: auto auto 10px auto;
+}
+.canvas{
+  /*height: 100px;
+  width:70%;*/
+  border-style: solid;
+  border-color: hsl(10, 20%, 60%);
+  border-width: 5px;
+  background-color: black;
+}
+
+}
+.btn-container{
+  display: flex;
+  justify-content: center;
+  margin: 20px 0 0px 0;
+}
+
+.btn{
+  width: 200px;
+  height: 30px;
+  margin: 2px auto;
+  border-radius: 30px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.clear-btn{
+  background-color: bisque;
+}
+.pred-btn{
+	background-color: limegreen;
+}
+.clear-btn:hover{
+  color: blue;
+}
+.pred-btn:hover{
+  color: blue;
+}
+.btn:active{
+  font-size: 10px;
+}
+
+
+.output-container{
+	height: 480px;
+}
