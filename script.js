@@ -147,7 +147,6 @@ function downloadImage(data, filename = 'untitled.jpeg') {
 $("#pred-btn").click(async function () {
     var imageData = ctx.getImageData(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
     var url = cv.toDataURL("image/jpeg", 1.0);
-    //Canvas2Image.saveAsPNG(cv);
     downloadImage(url, 'img.jpeg')
     /*$.ajax({
         url:'python.py'
