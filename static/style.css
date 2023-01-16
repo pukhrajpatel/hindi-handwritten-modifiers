@@ -9,18 +9,20 @@ body{
 	display: grid;
 	justify-content: center;
 	align-items: center;
-	grid-template-columns: 300px 300px 300px;
+	grid-template-columns: 100px 100px 100px;
 	background-color: floralwhite;
 	box-shadow: 10;
-	grid-column-gap: 50px;
+	grid-column-gap: 200px;
 }
 .head{
 	font-size: 20px;
 	align-items: center;
 }
 .contanier{
-  display:flex;
-  justify-content: left;
+  display:grid;
+  grid-template-columns: 400px 100px;
+  justify-content: center;
+  grid-column-gap: 10px;
   margin: auto auto 10px auto;
 }
 .canvas{
@@ -32,17 +34,17 @@ body{
   background-color: black;
 }
 
-}
 .btn-container{
   display: flex;
-  justify-content: center;
-  margin: 20px 0 0px 0;
+  flex-direction: column;
+  justify-content: left;
+  margin: 10px 0px 0px 50px;
 }
 
 .btn{
   width: 200px;
   height: 30px;
-  margin: 2px auto;
+  margin: 0px 0px 20px 0px;
   border-radius: 30px;
   font-size: 20px;
   cursor: pointer;
@@ -66,5 +68,23 @@ body{
 
 
 .output-container{
-	height: 480px;
+  display:flex;
+  justify-content: center;
+  margin: auto auto 10px auto;
+}
+.head1{
+  font-size: 25px;
+  justify-content: center;
+}
+#p1{
+  background-color: blanchedalmond;
+}
+#p2{
+  background-color: yellow;
+}
+#p3{
+  background-color: blueviolet;
+}
+.visi{
+  margin: 0px 20px 0px 20px;
 }

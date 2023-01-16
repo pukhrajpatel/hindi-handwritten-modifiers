@@ -2,7 +2,7 @@ let model;
 var canvasLineJoin          = "round";
 var canvasStrokeStyle       = "white";
 var canvasLineWidth         = 5;
-var canvasWidth             = 1000;
+var canvasWidth             = 400;
 var canvasHeight            = 130;
 var clickX = new Array();
 var clickY = new Array();
@@ -130,12 +130,26 @@ function drawOnCanvas() {
     }
 }
 
+var img_top = document.getElementById('img_top')
+var img_mid = document.getElementById('img_mid')
+var img_bottom = document.getElementById('img_bottom')
+
+var p1 = document.getElementById('p1')
+var p2 = document.getElementById('p2')
+var p3 = document.getElementById('p3')
+
 $("#clear-btn").click(async function () {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     clickX = new Array();
     clickY = new Array();
     clickD = new Array();
-    $('#out-c').empty();
+    img_top.setAttribute('src', '');
+    img_mid.setAttribute('src', '');
+    img_bottom.setAttribute('src', '');
+    p1.innerHTML = "";
+    p2.innerHTML = "";
+    p3.innerHTML = "";
+    //$('#out-c').empty();
 });
 function downloadImage(data, filename = 'untitled.jpeg') {
     var a = document.createElement('a');
@@ -147,8 +161,41 @@ function downloadImage(data, filename = 'untitled.jpeg') {
 $("#pred-btn").click(async function () {
     var imageData = ctx.getImageData(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
     var url = cv.toDataURL("image/jpeg", 1.0);
-    downloadImage(url, 'img.jpeg')
-    /*$.ajax({
-        url:'python.py'
-    })*/
+    //console.log(url)
+    //console.log(imageData.data);
+    //console.log(imageData)
+    //downloadImage(url, 'img.jpeg')
+
+    //const spaw = require('child_process').spawn;
+    //const python_process = spaw('python', ['python.py', imageData]);
+    fd = new FormData()
+    fd.append('url',url);
+    $.ajax({
+      url: '',
+      type: 'post',
+      //data: {'images': url},
+      data: fd,
+      dataType: 'json',
+      async: false,
+      cache: false,
+      timeout: 3000,
+      contentType: false,
+      processData: false,
+      success: function(response){
+        console.log("hellodhsi")
+        $(img_top).attr('src', 'static/uploads/top.jpg' + '?' + new Date().getTime())
+        $(img_mid).attr('src', 'static/uploads/middle.jpg' + '?' + new Date().getTime())
+        $(img_bottom).attr('src', 'static/uploads/bottom.jpg' + '?' + new Date().getTime())
+        p1.innerHTML = "Upper modifiers";
+        p2.innerHTML = "Characters and middle modifiers";
+        p3.innerHTML = "Bottom modifiers";
+        /*console.log(response)
+        img_top.setAttribute('src', 'static/uploads/top.jpg');
+        img_mid.setAttribute('src', 'static/uploads/middle.jpg');
+        img_bottom.setAttribute('src', 'static/uploads/bottom.jpg')*/
+      },
+    });
+    /*img_top.setAttribute('src', 'static/uploads/top.jpg');
+    img_mid.setAttribute('src', 'static/uploads/middle.jpg');
+    img_bottom.setAttribute('src', 'static/uploads/bottom.jpg');*/
 });

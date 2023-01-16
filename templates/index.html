@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style.css')}}">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<title>Hindi-modifiers</title>
+</head>
+<body>
+	<h1 align = center>हस्तलिखित हिंदी भाषा के संशोधक (मात्राएँ) और वर्ण</h1>
+	<hr>
+	<div class = "images">
+		<p class = head>वर्ण</p>
+		<p class = head>मात्राएँ</p>
+		<p class = head>पृथक्करण</p>
+		<img src="{{ url_for('static', filename = 'images/img4.jpg')}}" width = 150px hegith = 80px>
+		<img src="{{ url_for('static', filename = 'images/img2.jpg')}}" width = 150px hegith = 80px>
+		<img src="{{ url_for('static', filename = 'images/img5.jpg')}}" width = 150px height = 80px>
+	</div>
+	<hr>
+	<h2 class = "heading">
+		नीचे दिए गए बॉक्स में हिंदी भाषा में एक शब्द बनाएं
+	</h2>
+	<div class = "contanier">
+        <!-- <div class = "canvas" id = "canvas-box"></div> -->
+        <canvas class = "canvas" id="cv"></canvas>  
+		<div class = "btn-container">
+			<button class = "btn pred-btn" id = "pred-btn">अलगाव करो</button>
+			<button class = "btn clear-btn" id = "clear-btn">बॉक्स को साफ करें</button>
+		</div>
+    </div>
+    <div class = output-container id = out-c>
+		<div class = visi>
+			<p class = head1 id = "p1"></p>
+			<img src="" id = "img_top" class = "imgs" width = 150px hegith = 150px>
+		</div>
+		<div class = visi>
+			<p class = head1 id = "p2"></p>
+			<img src="" id = "img_mid" class = "imgs" width = 500px hegith = 150px>
+		</div>
+		<div class = visi>
+			<p class = head1 id = "p3"></p>
+			<img src="" id = "img_bottom" class = "imgs" width = 150px hegith = 150px>
+		</div>
+    </div>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'script.js')}}"></script>
+</body>
+</html>

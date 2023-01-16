@@ -3,9 +3,20 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
+import urllib
+import os
 
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, jsonify,  redirect
 
+import matplotlib
+matplotlib.use('Agg')
+
+print("hello welcome")
+
+def grab_buffer(fig):
+    data = np.fromstring(fig.canvas.tostring_rgb(), dtype=np.uint8, sep='')
+    data = data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
+    return data
 
 def process(img):
   ret,thresh1 = cv2.threshold(img,170,255,cv2.THRESH_BINARY)
@@ -186,31 +197,124 @@ def process(img):
 
   return img_char_top, img_char, img_mod_bottom
 
+def upload_process(req):
+  print("hello")
+  #files = req.files.getlist('images')
+  lk = "link for image"
+  req = urllib.request.urlopen(lk)
+  #req = urllib.request.urlopen(request['images'])
+  arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
+  img = cv2.imdecode(arr, -1) # 'Load it as it is'
+
+  gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY);
 
 
-app = Flask(__name__);
+  top_mod, chars, bottom_mod = process(gray_image)
 
-@app.route('/home/<img>', methods = ['POST'])
-def home()
-#img = cv2.imread('img.jpg', 0)
-img = sys.argv[1];
-print('hello', img)
-top_mod, chars, bottom_mod = process(img)
+  for i in range(len(top_mod)):
+    plt.subplot(1, len(top_mod), i+1);
+    plt.axis('off')
+    plt.imshow(top_mod[i])
+  
+  plt.savefig('top.jpg')
 
-for i in range(len(top_mod)):
-  plt.subplot(1, len(top_mod), i+1);
-  plt.axis('off')
-  plt.imshow(top_mod[i])
-plt.savefig('top.jpg')
+  # for i in range(len(chars)):
+	#   plt.subplot(1, len(chars), i+1);
+  #   plt.axis('off')
+  #   plt.imshow(chars[i])
+  
+  plt.savefig('middle.jpg')
 
-for i in range(len(chars)):
-  plt.subplot(1, len(chars), i+1);
-  plt.axis('off')
-  plt.imshow(chars[i])
-plt.savefig('middle.jpg')
+  # for i in range(len(bottom_mod)):
+	#   plt.subplot(1, len(bottom_mod), i+1);
+  #   plt.axis('off')
+  #   plt.imshow(bottom_mod[i])
+  
 
-for i in range(len(bottom_mod)):
-  plt.subplot(1, len(bottom_mod), i+1);
-  plt.axis('off')
-  plt.imshow(bottom_mod[i])
-plt.savefig('bottom.jpg')
+  plt.savefig('bottom.jpg')
+
+  #resp = jsonify({'top_mod': img_char_top, 'mid_char': img_char, 'bottom_mod': img_mod_bottom})
+  resp = jsonify({'message': 'Operation successful'})
+  return resp;
+
+
+app  = Flask(__name__);
+app.config['UPLOAD_FOLDER'] = os.path.join('static', 'uploads');
+
+@app.route('/', methods = ['POST', 'GET'])
+def upload_form():
+  if request.method == 'POST':
+    print("hello")
+    req = request.form.to_dict(flat=False)
+    lk  = req['url']
+    req = urllib.request.urlopen(lk[0])
+    #files = request.files.getlist('images')
+    #req = urllib.request.urlopen(request.form.get("images", False))
+    arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
+    img = cv2.imdecode(arr, -1) # 'Load it as it is'
+    #img = cv2.imread('37.jpg')
+    gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY);
+    img1 = gray_image.copy()
+    for h in range(gray_image.shape[0]):
+      for w in range(gray_image.shape[1]):
+        if gray_image[h][w] == 255:
+          img1[h][w] = 0
+        else:
+          img1[h][w] = 255;
+
+    top_mod, chars, bottom_mod = process(img1)
+
+    if(len(top_mod) == 0):
+      ii1 = np.ones((10, 10));
+      ii1 = ii1*255;
+      plt.imshow(ii1);
+      plt.axis('off')
+      #plt.title('Upper Modifiers')
+      plt.savefig('static/uploads/top.jpg')
+    else:
+      for i in range(len(top_mod)):
+        plt.subplot(1, len(top_mod), i+1);
+        plt.axis('off')
+        plt.imshow(top_mod[i])
+      #plt.title('Upper Modifiers')
+      plt.savefig('static/uploads/top.jpg')
+
+    for i in range(len(chars)):
+      plt.subplot(1, len(chars), i+1);
+      plt.axis('off')
+      plt.imshow(chars[i])
+
+    #plt.title("Characters and Middle modifiers")
+    plt.savefig('static/uploads/middle.jpg')
+
+    if(len(bottom_mod) == 0):
+      plt.subplot(1, 1, 1)
+      ii2 = np.ones((10, 10));
+      ii2 = ii2*255;
+      plt.axis('off')
+      plt.imshow(ii2);
+      #plt.title('Bottom Modifiers')
+      plt.savefig('static/uploads/bottom.jpg')
+    else:
+      for i in range(len(bottom_mod)):
+        plt.subplot(1, len(bottom_mod), i+1);
+        plt.axis('off')
+        plt.imshow(bottom_mod[i])
+      #plt.title('Bottom Modifiers')
+      plt.savefig('static/uploads/bottom.jpg')
+
+
+    full_filename1 = os.path.join(app.config['UPLOAD_FOLDER'], 'top.jpg')
+    full_filename2 = os.path.join(app.config['UPLOAD_FOLDER'], 'middle.jpg')
+    full_filename3 = os.path.join(app.config['UPLOAD_FOLDER'], 'bottom.jpg')
+    #resp = jsonify({'top_mod': img_char_top, 'mid_char': img_char, 'bottom_mod': img_mod_bottom})
+    resp = jsonify({'message': 'Operation successful'})
+    #return render_template('index.html', img_top1 = full_filename1, img_bottom1 = full_filename2, img_mid1 = full_filename3);
+    print(full_filename3)
+    return resp;
+    #return render_template('index.html', img_top1 = full_filename1)
+  return render_template('index.html')
+
+
+if __name__ == '__main__':
+  app.run(debug=True)
