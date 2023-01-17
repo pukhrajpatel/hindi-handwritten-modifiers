@@ -9,3 +9,9 @@ https://pukhrajpatel.github.io/hindi-handwritten-modifiers/
 **run main.py** in visual studio code <br>
 open the url that it gives you after you run the code {will be hosted on local port} <br>
 Yeah!!, We made it, the web app will open! <br>
+
+## Demo video
+
+
+https://user-images.githubusercontent.com/90139196/212812676-4eee4c17-c955-413b-9dc6-76028b8cfae0.mp4
+
